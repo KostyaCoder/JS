@@ -17,10 +17,7 @@ class MyArray {
       return;
     }
 
-    const copyMyArray = new MyArray();
-    for (let i = 0; i < this.length; i++) {
-      copyMyArray.push(this[i]);
-    }
+    const copyMyArray = this.map((x) => x);
 
     let n = 0;
     for (let i = copyMyArray.length - 1; i >= 0; i--) {
@@ -61,10 +58,10 @@ class MyArray {
     /*
       1. если массив пустой вернем undefined
       2. запомним удаляемый элемент
-      3. запомним копию старого массива начиная со второго
+      3. запомним копию старого
       4. удаляем первое свойство 
       5. удаляем последнее свойство 
-      6. запишем старые значения на новых индексах
+      6. запишем старые значения начиная со второго на новых индексах
       7. вернуть удаляемый элемент
     */
 
@@ -74,15 +71,12 @@ class MyArray {
 
     const deletedElem = this[0];
 
-    const copyMyArray = new MyArray();
-    for (let i = 1; i < this.length; i++) {
-      copyMyArray.push(this[i]);
-    }
+    const copyMyArray = this.map((x) => x);
 
     delete this[0];
     delete this[this.length - 1];
 
-    for (let i = 0; i < copyMyArray.length; i++) {
+    for (let i = 1; i < copyMyArray.length; i++) {
       this[i] = copyMyArray[i];
     }
 
@@ -110,15 +104,8 @@ class MyArray {
 
     const oldLength = this.length;
     const shiftIndex = elements.length;
-
-    const copyMyArray = new MyArray();
-    for (let i = 0; i < this.length; i++) {
-      copyMyArray.push(this[i]);
-    }
-
-    for (let i = 0; i < elements.length; i++) {
-      this[i] = elements[i];
-    }
+    const copyMyArray = this.map((x) => x);
+    elements.forEach((x, i) => (this[i] = x));
 
     for (let i = 0; i < copyMyArray.length; i++) {
       this[shiftIndex + i] = copyMyArray[i];
