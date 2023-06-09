@@ -26,24 +26,38 @@ class MyArray {
     }
   }
 
-  foreach(callBack) {
+  foreach(callBack, thisArg) {
+    let newCallBack = callBack;
+    if (thisArg !== undefined) {
+      newCallBack = callBack.bind(thisArg);
+    }
+
     for (let i = 0; i < this.length; i++) {
-      callBack(this[i], i, this);
+      newCallBack(this[i], i, this);
     }
   }
 
-  map(callBack) {
+  map(callBack, thisArg) {
+    let newCallBack = callBack;
+    if (thisArg !== undefined) {
+      newCallBack = callBack.bind(thisArg);
+    }
     const newMyArray = new MyArray();
     for (let i = 0; i < this.length; i++) {
-      newMyArray.push(callBack(this[i], i, this));
+      newMyArray.push(newCallBack(this[i], i, this));
     }
     return newMyArray;
   }
 
-  filter(callBack) {
+  filter(callBack, thisArg) {
+    let newCallBack = callBack;
+    if (thisArg !== undefined) {
+      newCallBack = callBack.bind(thisArg);
+    }
+
     const newMyArray = new MyArray();
     for (let i = 0; i < this.length; i++) {
-      if (callBack(this[i], i, this)) {
+      if (newCallBack(this[i], i, this)) {
         newMyArray.push(this[i]);
       }
     }
