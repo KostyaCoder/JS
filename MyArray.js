@@ -72,7 +72,7 @@ class MyArray {
     /*
       1. если массив пустой вернем undefined
       2. запомним удаляемый элемент
-      3. запомним копию старого
+      3. запомним копию старого MyArray
       4. удаляем первое свойство 
       5. удаляем последнее свойство 
       6. запишем старые значения начиная со второго на новых индексах
@@ -84,14 +84,12 @@ class MyArray {
     }
 
     const deletedElem = this[0];
-
     const copyMyArray = this.map((x) => x);
-
     delete this[0];
     delete this[this.length - 1];
 
     for (let i = 1; i < copyMyArray.length; i++) {
-      this[i] = copyMyArray[i];
+      this[i - 1] = copyMyArray[i];
     }
 
     this.length--;
@@ -120,11 +118,7 @@ class MyArray {
     const shiftIndex = elements.length;
     const copyMyArray = this.map((x) => x);
     elements.forEach((x, i) => (this[i] = x));
-
-    for (let i = 0; i < copyMyArray.length; i++) {
-      this[shiftIndex + i] = copyMyArray[i];
-    }
-
+    copyMyArray.foreach((x, i) => (this[shiftIndex + i] = x));
     this.length = oldLength + shiftIndex;
 
     return this.length;
@@ -172,9 +166,12 @@ class MyArray {
 
     return deletedElem;
   }
+
+  [Symbol.iterator]() {}
 }
 
 const myArr = new MyArray(40, 53, 46);
+const arr = new Array(40, 53, 46);
 
 // function plus(value, index, arr) {
 //   return value + 1;
