@@ -26,7 +26,7 @@ class MyArray {
     }
   }
 
-  foreach(callBack, thisArg) {
+  forEach(callBack, thisArg) {
     let newCallBack = callBack;
     if (thisArg !== undefined) {
       newCallBack = callBack.bind(thisArg);
@@ -118,7 +118,7 @@ class MyArray {
     const shiftIndex = elements.length;
     const copyMyArray = this.map((x) => x);
     elements.forEach((x, i) => (this[i] = x));
-    copyMyArray.foreach((x, i) => (this[shiftIndex + i] = x));
+    copyMyArray.forEach((x, i) => (this[shiftIndex + i] = x));
     this.length = oldLength + shiftIndex;
 
     return this.length;
@@ -167,7 +167,18 @@ class MyArray {
     return deletedElem;
   }
 
-  [Symbol.iterator]() {}
+  [Symbol.iterator]() {
+    let i = 0;
+    const arr = this;
+    return {
+      next: function () {
+        return {
+          done: i >= arr.length,
+          value: arr[i++],
+        };
+      },
+    };
+  }
 }
 
 const myArr = new MyArray(40, 53, 46);
@@ -176,5 +187,5 @@ const arr = new Array(40, 53, 46);
 // function plus(value, index, arr) {
 //   return value + 1;
 // }
-// myArr.foreach((x) => console.log(x));
+// myArr.forEach((x) => console.log(x));
 // const fArr = myArr.filter((x)=>x>10);
